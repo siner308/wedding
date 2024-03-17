@@ -1,5 +1,6 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Loading from '@/components/WayToCome/Loading';
+import { decl } from 'postcss';
 
 type StartPoint = {
   name: string;
@@ -15,15 +16,21 @@ type Application = {
   getWebLink: (lat?: string, lng?: string, name?: string) => string;
 }
 
+declare global {
+  interface Document {
+    webkitHidden: boolean;
+  }
+}
+
 const WayToCome = () => {
   const startPoints: StartPoint[] = [
     { name: '현위치' },
-    { name: '고속터미널' },
-    { name: '남부터미널' },
-    { name: '동서울터미널' },
-    { name: '서울역' },
-    { name: '수서역' },
-    { name: '잠실역' },
+    { name: '잠실역', lat: 37.5132612, lng: 127.1001336 },
+    { name: '서울역', lat: 37.5547125, lng: 126.9707878 },
+    { name: '수서역', lat: 37.485544, lng: 127.10438 },
+    { name: '고속터미널', lat: 37.5049142, lng: 127.0049151 },
+    { name: '남부터미널', lat: 37.484918, lng: 127.01629 },
+    { name: '동서울터미널', lat: 37.5345963, lng: 127.0941813 },
   ];
 
   const destination = {
@@ -34,7 +41,7 @@ const WayToCome = () => {
 
   const applications: Application[] = [
     {
-      name: '네이버맵',
+      name: '네이버 지도',
       imgSrc: '/icons/navermap.png',
       alt: 'navermap',
       getDeepLink: (lat, lng, name) => `nmap://route/public?slat=${lat}&slng=${lng}&sname=${name}&dlat=${destination.lat}&dlng=${destination.lng}&dname=${destination.name}`,
@@ -68,6 +75,9 @@ const WayToCome = () => {
   const [currentLocation, setCurrentLocation] = useState<GeolocationPosition | undefined>(undefined);
   const [currentLocationLoading, setCurrentLocationLoading] = useState<boolean>(false);
 
+  const [intervalCleared, setIntervalCleared] = useState<boolean>(false);
+  const [deepLinkInterval, setDeepLinkInterval] = useState<NodeJS.Timeout>();
+
   const findWay = () => {
     if (from === undefined || by === undefined) {
       alert('출발지점과 어플을 선택해주세요.');
@@ -95,23 +105,27 @@ const WayToCome = () => {
 
     location.href = applications[by].getDeepLink(lat, lng, name);
 
-    function clearTimers() {
-      clearInterval(check);
-      clearTimeout(timer);
-    }
-
-    function isHideWeb() {
-      if (document.hidden) {
-        clearTimers();
+    function isHideWeb(timer: NodeJS.Timeout) {
+      if (document.webkitHidden || document.hidden) {
+        clearTimeout(timer);
+        setIntervalCleared(true);
       }
     }
 
-    const check = setInterval(isHideWeb, 200);
-
+    setIntervalCleared(false);
     const timer = setTimeout(function () {
-      window.open(applications[by].getWebLink(lat, lng, name), '_blank');
-    }, 500);
+      if (confirm('새 창에서 가는 길을 확인하시겠습니까?')) {
+        window.open(applications[by].getWebLink(lat, lng, name), '_blank');
+      }
+    }, 2000);
+    setDeepLinkInterval(setInterval(() => isHideWeb(timer), 100));
   };
+
+  useEffect(() => {
+    if (intervalCleared) {
+      clearInterval(deepLinkInterval);
+    }
+  }, [deepLinkInterval, intervalCleared]);
 
   const handleClickFrom = (index: number) => {
     if (startPoints[index].name === '현위치') {
@@ -128,9 +142,9 @@ const WayToCome = () => {
       });
     }
     setFrom(index);
-  }
+  };
 
-  const findWayButtonDisabled = from === undefined || by === undefined || (startPoints[from].name === '현위치' && !currentLocation)
+  const findWayButtonDisabled = from === undefined || by === undefined || (startPoints[from].name === '현위치' && !currentLocation);
 
   return (
     <div className={'flex flex-col p-2 gap-10'}>
@@ -151,7 +165,7 @@ const WayToCome = () => {
                  placeholder={'출발지점'}/>
           <span>에서</span>
         </div>
-        {currentLocationLoading && <Loading text={'현위치를 찾는 중...'} />}
+        {currentLocationLoading && <Loading text={'현위치를 찾는 중...'}/>}
       </div>
       <div className={'flex flex-col gap-4'}>
         <div className={'flex flex-wrap gap-2 justify-center'}>
@@ -165,6 +179,7 @@ const WayToCome = () => {
             </button>
           ))}
         </div>
+        <div className={'text-center text-red-300'}>현재 네이버맵만 개발완료</div>
         <div className={'flex justify-center'}>
           <input
             className={'border-2'}
