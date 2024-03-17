@@ -100,9 +100,14 @@ const WayToCome = () => {
     }
 
     name.replace('현위치', '');
-    console.log(lat, lng, name);
-    debugger
 
+    // if not mobile, open web link
+    if (!navigator.userAgent.includes('Android') && !navigator.userAgent.includes('iPhone')) {
+      window.open(applications[by].getWebLink(lat, lng, name), '_blank');
+      return;
+    }
+
+    // if mobile, try deep link
     location.href = applications[by].getDeepLink(lat, lng, name);
 
     function isHideWeb(timer: NodeJS.Timeout) {
