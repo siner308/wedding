@@ -8,7 +8,7 @@ import PhotoGallery from '@/components/PhotoGallery';
 
 export default function Home() {
   return (
-    <div className={'px-8 flex flex-col gap-8 max-w-screen-lg mx-auto'}>
+    <div className={'flex flex-col gap-8 max-w-3xl mx-auto shadow-2xl pb-10'}>
       <MainBanner />
       <InvitationMessage />
       <Events />

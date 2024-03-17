@@ -1,12 +1,16 @@
-import Event from '@/components/Introduce/Event';
-
 const Events = () => {
   return (
-    <div className={'bg-amber-300 p-1 flex flex-col gap-1'}>
-      <Event title={'본식'} location={'루벨 35층 단독홀'} datePeriod={{ start: new Date('2024-07-06 12:30') }} />
-      <Event title={'피로연'} location={'루벨 35층 피로연장'} datePeriod={{ start: new Date('2024-07-06 12:00'), end: new Date('2024-07-06 13:30') }} />
+    <div className={'flex justify-between gap-2'}>
+      <div className={'w-full h-20 bg-orange-300 mt-20 text-center flex flex-col justify-center'}>
+        <div>본식</div>
+        <div>12:30 - 13:00</div>
+      </div>
+      <div className={'w-full h-80 bg-blue-300 text-center flex flex-col justify-center'}>
+        <div>식사</div>
+        <div>12:00 - 13:30</div>
+      </div>
     </div>
   );
-}
+};
 
 export default Events;

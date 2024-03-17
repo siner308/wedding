@@ -8,10 +8,7 @@ const config: Config = {
   ],
   theme: {
     "screens": {
-      "xsm": "400px", // 2
-      "sm": "550px", // 3
-      "md": "700px", // 4
-      "lg": "850px", // 5
+      "lg": "550px",
     },
   },
   plugins: [],

@@ -1,16 +1,24 @@
+'use client';
+
 import DateTime from '@/components/MainBanner/DateTime';
 import Location from '@/components/MainBanner/Location';
 
 const MainBanner = () => {
   const date = new Date('2024-07-06 12:30');
-  const location = '루벨 - 서울 강동구 천호동 - 강동역 1번 출구 35층'
+  const location = '루벨';
+  const backgroundImage = '/sample/couple.jpeg';
   return (
-    <div className={'bg-amber-200'}>
-      <h1>정현 & 지원</h1>
-      <DateTime value={date} />
-      <Location value={location} />
+    <div
+      style={{ filter: 'grayscale(80%)', backgroundImage: `url(${backgroundImage})` }}
+      className={'h-[800px] bg-cover bg-center bg-no-repeat relative flex justify-center'}
+    >
+      <div className={'flex flex-col gap-4 self-end text-white text-4xl text-center py-20'}>
+        <div>안정현 & 박지원</div>
+        <DateTime value={date}/>
+        <Location value={location}/>
+      </div>
     </div>
   );
-}
+};
 
 export default MainBanner;

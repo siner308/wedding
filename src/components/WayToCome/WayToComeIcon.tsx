@@ -17,7 +17,7 @@ const WayToComeIcon = (props: Props) => {
   };
   return (
     <div
-      className={"cursor-pointer bg-blue-200 p-1"}
+      className={"cursor-pointer p-1"}
       onClick={onClick}
     >
       <Image alt={alt} width={64} height={64} src={imgSrc} />
