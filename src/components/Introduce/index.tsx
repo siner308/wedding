@@ -7,7 +7,7 @@ const Events = () => {
       </div>
       <div className={'w-full h-80 bg-blue-300 text-center flex flex-col justify-center'}>
         <div>식사</div>
-        <div>12:00 - 13:30</div>
+        <div>12:00 - 14:00</div>
       </div>
     </div>
   );
