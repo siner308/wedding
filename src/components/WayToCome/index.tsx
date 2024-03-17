@@ -1,5 +1,4 @@
 import WayToComeIcon from '@/components/WayToCome/WayToComeIcon';
-import navermap from '../../../public/icons/navermap.png';
 
 const WayToCome = () => {
   // 네이버맵
