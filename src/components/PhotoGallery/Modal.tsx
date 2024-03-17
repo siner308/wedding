@@ -33,7 +33,7 @@ const Modal = (props: Props) => {
           <div id={'photo-gallery-image-container'} className={'flex gap-8'}>
             {slicedImages.map((image) => (
               <div key={image.index} onClick={() => setCurrentIndex(image.index)}>
-                <Image src={image.src} alt={image.src} width={100} height={100}/>
+                <Image className={image.index === currentIndex ? 'border-2' : ''} src={image.src} alt={image.src} width={100} height={100}/>
               </div>
             ))}
           </div>
