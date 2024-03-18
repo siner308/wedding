@@ -26,11 +26,12 @@ const WayToCome = () => {
   const startPoints: StartPoint[] = [
     { name: '현위치' },
     { name: '잠실역', lat: 37.5132612, lng: 127.1001336 },
-    { name: '서울역', lat: 37.5547125, lng: 126.9707878 },
-    { name: '수서역', lat: 37.485544, lng: 127.10438 },
-    { name: '고속터미널', lat: 37.5049142, lng: 127.0049151 },
-    { name: '남부터미널', lat: 37.484918, lng: 127.01629 },
-    { name: '동서울터미널', lat: 37.5345963, lng: 127.0941813 },
+    { name: '서울역 (KTX)', lat: 37.5547125, lng: 126.9707878 },
+    { name: '수서역 (SRT)', lat: 37.485544, lng: 127.10438 },
+    { name: '동대구역 (KTX/SRT)', lat: 35.879667, lng: 128.628476 },
+    { name: '서울고속터미널 (서울경부)', lat: 37.5049142, lng: 127.0049151 },
+    { name: '서울남부터미널', lat: 37.484918, lng: 127.01629 },
+    { name: '동서울터미널 (강변역)', lat: 37.5345963, lng: 127.0941813 },
   ];
 
   const destination = {
@@ -154,29 +155,37 @@ const WayToCome = () => {
   return (
     <div className={'flex flex-col p-2 gap-10'}>
       <div className={'flex flex-col gap-4'}>
-        <div className={'flex flex-wrap gap-2 justify-center'}>
+        <div className={'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 place-self-center'}>
           {startPoints.map((startPoint, index) => (
             <button
-              className={'p-2 bg-orange-300 rounded-lg'}
+              className={'p-1 h-14 max-w-40 bg-orange-300 rounded-lg break-words'}
               key={index}
               onClick={() => handleClickFrom(index)}
             >
-              {startPoint.name}
+              {startPoint.name.split(' ').map((word, i) => {
+                return (
+                  <div key={i}>{word}</div>
+                )
+              })}
             </button>
           ))}
         </div>
-        <div className={'flex justify-center'}>
-          <input className={'border-2'} disabled={true} value={from !== undefined ? startPoints[from].name : ''}
-                 placeholder={'출발지점'}/>
-          <span>에서</span>
+        <div className={'flex justify-center gap-2'}>
+          <input
+            className={'h-10 w-40 text-xl text-center border-orange-500 border-b-2 rounded-b-none'}
+            disabled={true}
+            value={from !== undefined ? startPoints[from].name : ''}
+            placeholder={'출발지점'}
+          />
+          <span className={'self-center'}>에서</span>
         </div>
         {currentLocationLoading && <Loading text={'현위치를 찾는 중...'}/>}
       </div>
       <div className={'flex flex-col gap-4'}>
-        <div className={'flex flex-wrap gap-2 justify-center'}>
+        <div className={'grid grid-cols-2 sm:grid-cols-4 gap-2 place-self-center'}>
           {applications.map((application, index) => (
             <button
-              className={'p-2 bg-blue-300 rounded-lg'}
+              className={'p-1 h-14 bg-blue-300 rounded-lg break-words'}
               key={index}
               onClick={() => setBy(index)}
             >
@@ -185,14 +194,14 @@ const WayToCome = () => {
           ))}
         </div>
         <div className={'text-center text-red-300'}>현재 네이버맵만 개발완료</div>
-        <div className={'flex justify-center'}>
+        <div className={'flex justify-center gap-2'}>
           <input
-            className={'border-2'}
+            className={'h-10 w-40 text-xl text-center border-blue-500 border-b-2 rounded-b-none'}
             disabled={true}
             value={by !== undefined ? applications[by].name : ''}
-            placeholder={'지도, 네비게이션'}
+            placeholder={'지도 앱'}
           />
-          <span>으로</span>
+          <span className={'self-center'}>(으)로</span>
         </div>
       </div>
       <div className={'justify-center flex'}>

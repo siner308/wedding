@@ -11,7 +11,11 @@ const PhotoGallery = () => {
       {images.map((image, i) => {
         const imgClass = `url('${image}')`;
         return (
-          <div style={{ backgroundImage: imgClass }} className={'bg-center bg-no-repeat bg-cover w-full h-[400px]'} key={i} />
+          <div
+            style={{ backgroundImage: imgClass }}
+            className={'bg-center bg-no-repeat bg-cover w-full h-[400px] pointer-events-none'}
+            key={i}
+          />
         );
       })}
     </div>
