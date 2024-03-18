@@ -1,6 +1,10 @@
 import { useEffect, useState } from 'react';
 import Loading from '@/components/WayToCome/Loading';
 import { decl } from 'postcss';
+import Input from '@/components/WayToCome/Input';
+import Button from '@/components/WayToCome/Button';
+import ButtonContainer from '@/components/WayToCome/ButtonContainer';
+import InputGroup from '@/components/WayToCome/InputGroup';
 
 type StartPoint = {
   name: string;
@@ -155,54 +159,46 @@ const WayToCome = () => {
   return (
     <div className={'flex flex-col p-2 gap-10'}>
       <div className={'flex flex-col gap-4'}>
-        <div className={'grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-2 place-self-center'}>
+        <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'}>
           {startPoints.map((startPoint, index) => (
-            <button
-              className={'p-1 h-14 max-w-40 bg-orange-300 rounded-lg break-words'}
-              key={index}
-              onClick={() => handleClickFrom(index)}
-            >
+            <Button color={'orange'} key={index} onClick={() => handleClickFrom(index)}>
               {startPoint.name.split(' ').map((word, i) => {
                 return (
                   <div key={i}>{word}</div>
-                )
+                );
               })}
-            </button>
+            </Button>
           ))}
-        </div>
-        <div className={'flex justify-center gap-2'}>
-          <input
-            className={'h-10 w-40 text-xl text-center border-orange-500 border-b-2 rounded-b-none'}
-            disabled={true}
-            value={from !== undefined ? startPoints[from].name : ''}
+        </ButtonContainer>
+        <InputGroup>
+          <Input
+            width={'lg'}
             placeholder={'출발지점'}
+            value={from !== undefined ? startPoints[from].name : ''}
+            lineColor={'orange'}
           />
           <span className={'self-center'}>에서</span>
-        </div>
+        </InputGroup>
         {currentLocationLoading && <Loading text={'현위치를 찾는 중...'}/>}
       </div>
       <div className={'flex flex-col gap-4'}>
-        <div className={'grid grid-cols-2 sm:grid-cols-4 gap-2 place-self-center'}>
+        <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-4'}>
           {applications.map((application, index) => (
-            <button
-              className={'p-1 h-14 bg-blue-300 rounded-lg break-words'}
-              key={index}
-              onClick={() => setBy(index)}
-            >
+            <Button color={'blue'} key={index} onClick={() => setBy(index)}>
               {application.name}
-            </button>
+            </Button>
           ))}
-        </div>
+        </ButtonContainer>
         <div className={'text-center text-red-300'}>현재 네이버맵만 개발완료</div>
-        <div className={'flex justify-center gap-2'}>
-          <input
-            className={'h-10 w-40 text-xl text-center border-blue-500 border-b-2 rounded-b-none'}
-            disabled={true}
-            value={by !== undefined ? applications[by].name : ''}
+        <InputGroup>
+          <Input
+            width={'sm'}
             placeholder={'지도 앱'}
+            value={by !== undefined ? applications[by].name : ''}
+            lineColor={'blue'}
           />
           <span className={'self-center'}>(으)로</span>
-        </div>
+        </InputGroup>
       </div>
       <div className={'justify-center flex'}>
         <button
