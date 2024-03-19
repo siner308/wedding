@@ -13,11 +13,28 @@ type Destination = {
 }
 
 type Application = {
+  type: 'map' | 'navigation';
   name: string;
   imgSrc: string;
   alt: string;
-  getDeepLink: (destination: Destination, lat?: string, lng?: string, name?: string) => string;
-  getWebLink: (destination: Destination, lat?: string, lng?: string, name?: string) => string;
+  openDeepLink: (destination: Destination, lat?: string, lng?: string, name?: string) => void;
+  openWebLink: (destination: Destination, lat?: string, lng?: string, name?: string) => void;
+}
+
+declare global {
+  interface Kakao {
+    init: (key: string) => void;
+    Navi: {
+      start: (options: {
+        name: string;
+        x: number;
+        y: number;
+        coordType?: 'wgs84' | 'katec';
+        vehicleType?: 'car' | 'train' | 'walk';
+        rpOption?: 'traffice' | 'shortest';
+      }) => void;
+    };
+  }
 }
 
 export const startPoints: StartPoint[] = [
@@ -49,49 +66,61 @@ export const destinations: Destination[] = [
 
 export const applications: Application[] = [
   {
+    type: 'map',
     name: '네이버 지도',
     imgSrc: '/icons/navermap.png',
     alt: 'navermap',
-    getDeepLink: (destination, lat, lng, name) => {
+    openDeepLink: (destination, lat, lng, name) => {
       const method = destination.parkingRequired ? 'car' : 'public';
-      return `nmap://route/${method}?slat=${lat}&slng=${lng}&sname=${name}&dlat=${destination.lat}&dlng=${destination.lng}&dname=${destination.name}`;
+      location.href = `nmap://route/${method}?slat=${lat}&slng=${lng}&sname=${name}&dlat=${destination.lat}&dlng=${destination.lng}&dname=${destination.name}`;
     },
-    getWebLink: (destination, lat, lng, name) => {
+    openWebLink: (destination, lat, lng, name) => {
       const method = destination.parkingRequired ? 0 : 1; // 0: 자동차, 1: 대중교통
-      return `https://map.naver.com/index.nhn?slng=${lng}&slat=${lat}&stext=${name}&elng=${destination.lng}&elat=${destination.lat}&etext=${destination.name}&menu=route&pathType=${method}`;
+      const url = `https://map.naver.com/index.nhn?slng=${lng}&slat=${lat}&stext=${name}&elng=${destination.lng}&elat=${destination.lat}&etext=${destination.name}&menu=route&pathType=${method}`;
+      window.open(url, '_blank')
     },
   },
   {
+    type: 'map',
     name: '카카오맵',
     imgSrc: '/icons/kakaomap.png',
     alt: 'kakaomap',
-    getDeepLink: (destination, lat, lng, name) => {
+    openDeepLink: (destination, lat, lng, name) => {
       const method = destination.parkingRequired ? 'CAR' : 'PUBLICTRANSIT';
-      return `kakaomap://route?sp=${lat},${lng}&ep=${destination.lat},${destination.lng}&by=${method}`;
+      location.href = `kakaomap://route?sp=${lat},${lng}&ep=${destination.lat},${destination.lng}&by=${method}`;
     },
-    getWebLink: (destination, lat, lng, name) => {
-      return `https://map.kakao.com/link/from/${name},${lat},${lng}/to/${destination.name},${destination.lat},${destination.lng}`;
+    openWebLink: (destination, lat, lng, name) => {
+      const url = `https://map.kakao.com/link/from/${name},${lat},${lng}/to/${destination.name},${destination.lat},${destination.lng}`;
+      window.open(url, '_blank')
     },
   },
   {
+    type: 'navigation',
     name: '카카오내비',
     imgSrc: '/icons/kakaonavi.png',
     alt: 'kakaonavi',
-    getDeepLink: (destination, lat, lng, name) => {
-      return `kakaonavi://route?sp=${lat},${lng}&ep=37.5662952,126.97794509999994`;
+    openDeepLink: (destination) => {
+      // @ts-ignore
+      Kakao.Navi.start({
+        name: destination.name,
+        x: destination.lng,
+        y: destination.lat,
+        coordType: 'wgs84',
+      });
     },
-    getWebLink: (destination, lat, lng, name) => {
-      return `https://map.kakao.com/?q=${lat},${lng}`;
+    openWebLink: (destination, lat, lng, name) => {
+      alert('내비게이션은 어플에서만 사용 가능합니다');
     },
   },
   {
+    type: 'navigation',
     name: 'T맵',
     imgSrc: '/icons/tmap.png',
     alt: 'tmap',
-    getDeepLink: (destination, lat, lng, name) => {
+    openDeepLink: (destination, lat, lng, name) => {
       return `https://m.search.tmap.co.kr/tmapview/?version=1&appname=com.skt.tmap&searchKeyword=${lat},${lng}&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}&appname=com.skt.tmap&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}&appname=com.skt.tmap&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}&appname=com.skt.tmap&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}`;
     },
-    getWebLink: (destination, lat, lng, name) => {
+    openWebLink: (destination, lat, lng, name) => {
       return `https://m.search.tmap.co.kr/tmapview/?version=1&appname=com.skt.tmap&searchKeyword=${lat},${lng}&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}&appname=com.skt.tmap&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}&appname=com.skt.tmap&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}&appname=com.skt.tmap&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}`;
     },
   },
