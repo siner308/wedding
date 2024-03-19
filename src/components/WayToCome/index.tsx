@@ -79,7 +79,7 @@ const WayToCome = () => {
       if (navigationSelected || confirm('새 창에서 가는 길을 확인하시겠습니까?')) {
         applications[by].openWebLink(destination, lat, lng, name);
       }
-    }, 1000);
+    }, 1500);
 
     if (!navigationSelected) {
       setDeepLinkInterval(setInterval(() => isHideWeb(timer), 100));
@@ -95,7 +95,7 @@ const WayToCome = () => {
   useEffect(() => {
     if (from === undefined) return;
     console.log(from);
-    if (startPoints[from].name === '현위치') {
+    if (startPoints[from].name === '현위치' || !currentLocation) {
       setCurrentLocationLoading(true);
       navigator.geolocation.getCurrentPosition((position) => {
         setCurrentLocation(position);
