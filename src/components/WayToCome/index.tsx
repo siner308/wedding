@@ -28,6 +28,12 @@ const WayToCome = () => {
 
   const [kakaoNaviInitialized, setKakaoNaviInitialized] = useState<boolean>(false);
 
+  useEffect(() => {
+    if (intervalCleared) {
+      clearInterval(deepLinkInterval);
+    }
+  }, [deepLinkInterval, intervalCleared]);
+
   const isHideWeb = (timer: NodeJS.Timeout) => {
     if (document.webkitHidden || document.hidden) {
       clearTimeout(timer);
@@ -86,16 +92,11 @@ const WayToCome = () => {
     }
   };
 
-  useEffect(() => {
-    if (intervalCleared) {
-      clearInterval(deepLinkInterval);
-    }
-  }, [deepLinkInterval, intervalCleared]);
+  const findWayButtonDisabled = to === undefined || from === undefined || by === undefined || (startPoints[from].name === '현위치' && !currentLocation);
 
-  useEffect(() => {
-    if (from === undefined) return;
-    console.log(from);
-    if (startPoints[from].name === '현위치' || !currentLocation) {
+  const handleSetFrom = (index: number) => {
+    setFrom(index);
+    if (startPoints[index].name === '현위치' && !currentLocation) {
       setCurrentLocationLoading(true);
       navigator.geolocation.getCurrentPosition((position) => {
         setCurrentLocation(position);
@@ -108,9 +109,7 @@ const WayToCome = () => {
         maximumAge: 10000,
       });
     }
-  }, [from]);
-
-  const findWayButtonDisabled = to === undefined || from === undefined || by === undefined || (startPoints[from].name === '현위치' && !currentLocation);
+  };
 
   const handleSetBy = (index: number) => {
     setBy(index);
@@ -123,11 +122,10 @@ const WayToCome = () => {
         alert('내비게이션은 모바일에서만 사용 가능합니다.');
       }
     }
-  }
+  };
 
   const navigationSelected = by !== undefined && applications[by].type === 'navigation';
 
-  // @ts-ignore
   return (
     <div className={'flex flex-col gap-10'}>
       <div className={'flex flex-col gap-4'}>
@@ -136,7 +134,7 @@ const WayToCome = () => {
             <Button
               color={'orange'}
               key={index}
-              onClick={() => setFrom(index)}
+              onClick={() => handleSetFrom(index)}
               disabled={navigationSelected && startPoint.name !== '현위치'}
               selected={from === index}
             >
