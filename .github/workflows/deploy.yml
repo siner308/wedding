@@ -1,4 +1,3 @@
-
 name: Deploy To Production
 
 on:
@@ -24,7 +23,7 @@ jobs:
           AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
           AWS_BUCKET: ${{ secrets.AWS_BUCKET }}
         run: |
-          aws s3 sync ./out s3://$AWS_BUCKET
+          aws s3 sync --region ap-northeast-2 ./out s3://$AWS_BUCKET
 
       - name: Create Cloudfront Invalidation
         env:
