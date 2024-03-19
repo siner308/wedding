@@ -3,11 +3,11 @@ const Events = () => {
     <div className={'flex justify-between gap-2 place-self-center'}>
       <div className={'w-full flex gap-2'}>
         <div className={'mt-[-10px]'}>
-          <div className={'h-16 text-end'}>12:00</div>
-          <div className={'h-16 text-end'}>12:30</div>
-          <div className={'h-16 text-end'}>13:00</div>
-          <div className={'h-16 text-end'}>13:30</div>
-          <div className={'h-16 text-end'}>14:00</div>
+          <div className={'text-end h-16'}>12:00</div>
+          <div className={'text-end h-16'}>12:30</div>
+          <div className={'text-end h-16'}>13:00</div>
+          <div className={'text-end h-16'}>13:30</div>
+          <div className={'text-end'}>14:00</div>
         </div>
         <div>
           <div className={'w-28 h-16 bg-orange-100 border-white border'}></div>
