@@ -111,9 +111,9 @@ const WayToCome = () => {
   const handleSetBy = (index: number) => {
     setBy(index);
     if (applications[index].type === 'navigation') {
-      if (from && startPoints[from].name !== '현위치') {
+      if (!from || startPoints[from].name !== '현위치') {
         setFrom(startPoints.findIndex((startPoint) => startPoint.name === '현위치'));
-        alert('내비게이션은 현위치에서만 사용 가능합니다. 출발지가 현위치로 변경됩니다.');
+        alert('내비게이션은 현위치에서만 사용 가능합니다. 출발지가 현위치로 고정됩니다.');
       }
       if (!navigator.userAgent.includes('Android') && !navigator.userAgent.includes('iPhone')) {
         alert('내비게이션은 모바일에서만 사용 가능합니다.');

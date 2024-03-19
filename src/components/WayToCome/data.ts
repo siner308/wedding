@@ -108,9 +108,7 @@ export const applications: Application[] = [
         coordType: 'wgs84',
       });
     },
-    openWebLink: (destination, lat, lng, name) => {
-      alert('내비게이션은 어플에서만 사용 가능합니다');
-    },
+    openWebLink: (destination, lat, lng, name) => {},
   },
   {
     type: 'navigation',
@@ -118,10 +116,8 @@ export const applications: Application[] = [
     imgSrc: '/icons/tmap.png',
     alt: 'tmap',
     openDeepLink: (destination, lat, lng, name) => {
-      return `https://m.search.tmap.co.kr/tmapview/?version=1&appname=com.skt.tmap&searchKeyword=${lat},${lng}&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}&appname=com.skt.tmap&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}&appname=com.skt.tmap&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}&appname=com.skt.tmap&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}`;
+      location.href = `tmap://route?rGoName=${destination.name}&rGoX=${destination.lng}&rGoY=${destination.lat}`;
     },
-    openWebLink: (destination, lat, lng, name) => {
-      return `https://m.search.tmap.co.kr/tmapview/?version=1&appname=com.skt.tmap&searchKeyword=${lat},${lng}&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}&appname=com.skt.tmap&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}&appname=com.skt.tmap&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}&appname=com.skt.tmap&centerLat=37.5662952&centerLon=126.97794509999994&name=${lat},${lng}`;
-    },
+    openWebLink: (destination, lat, lng, name) => {},
   },
 ];
