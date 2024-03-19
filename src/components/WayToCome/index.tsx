@@ -7,7 +7,8 @@ import InputGroup from '@/components/WayToCome/InputGroup';
 import RoughMap from '@/components/WayToCome/RoughMap';
 import Transportations from '@/components/WayToCome/Transportations';
 import { applications, destinations, startPoints } from '@/components/WayToCome/data';
-
+import Script from 'next/script';
+import { userAgent } from 'next/server';
 
 declare global {
   interface Document {
@@ -24,6 +25,15 @@ const WayToCome = () => {
 
   const [intervalCleared, setIntervalCleared] = useState<boolean>(false);
   const [deepLinkInterval, setDeepLinkInterval] = useState<NodeJS.Timeout>();
+
+  const [kakaoNaviInitialized, setKakaoNaviInitialized] = useState<boolean>(false);
+
+  const isHideWeb = (timer: NodeJS.Timeout) => {
+    if (document.webkitHidden || document.hidden) {
+      clearTimeout(timer);
+      setIntervalCleared(true);
+    }
+  };
 
   const findWay = () => {
     if (from === undefined || by === undefined || to === undefined) {
@@ -52,24 +62,21 @@ const WayToCome = () => {
 
     // if not mobile, open web link
     if (!navigator.userAgent.includes('Android') && !navigator.userAgent.includes('iPhone')) {
-      window.open(applications[by].getWebLink(destination, lat, lng, name), '_blank');
+      applications[by].openWebLink(destination, lat, lng, name);
       return;
     }
 
     // if mobile, try deep link
-    location.href = applications[by].getDeepLink(destination, lat, lng, name);
-
-    function isHideWeb(timer: NodeJS.Timeout) {
-      if (document.webkitHidden || document.hidden) {
-        clearTimeout(timer);
-        setIntervalCleared(true);
-      }
+    if (applications[by].name === '카카오내비' && !kakaoNaviInitialized) {
+      alert('카카오내비 초기화 중입니다. 잠시 후 다시 시도해주세요.');
+      return;
     }
+    applications[by].openDeepLink(destination, lat, lng, name);
 
     setIntervalCleared(false);
     const timer = setTimeout(function () {
       if (confirm('새 창에서 가는 길을 확인하시겠습니까?')) {
-        window.open(applications[by].getWebLink(destination, lat, lng, name), '_blank');
+        applications[by].openWebLink(destination, lat, lng, name);
       }
     }, 2000);
     setDeepLinkInterval(setInterval(() => isHideWeb(timer), 100));
@@ -81,8 +88,10 @@ const WayToCome = () => {
     }
   }, [deepLinkInterval, intervalCleared]);
 
-  const handleClickFrom = (index: number) => {
-    if (startPoints[index].name === '현위치') {
+  useEffect(() => {
+    if (from === undefined) return;
+    console.log(from);
+    if (startPoints[from].name === '현위치') {
       setCurrentLocationLoading(true);
       navigator.geolocation.getCurrentPosition((position) => {
         setCurrentLocation(position);
@@ -95,17 +104,38 @@ const WayToCome = () => {
         maximumAge: 10000,
       });
     }
-    setFrom(index);
-  };
+  }, [from]);
 
   const findWayButtonDisabled = to === undefined || from === undefined || by === undefined || (startPoints[from].name === '현위치' && !currentLocation);
 
+  const handleSetBy = (index: number) => {
+    setBy(index);
+    if (applications[index].type === 'navigation') {
+      if (!from || startPoints[from].name !== '현위치') {
+        setFrom(startPoints.findIndex((startPoint) => startPoint.name === '현위치'));
+        alert('내비게이션은 현위치에서만 사용 가능합니다. 출발지가 현위치로 고정됩니다.');
+      }
+      if (!navigator.userAgent.includes('Android') && !navigator.userAgent.includes('iPhone')) {
+        alert('내비게이션은 모바일에서만 사용 가능합니다.');
+      }
+    }
+  }
+
+  const navigationSelected = by !== undefined && applications[by].type === 'navigation';
+
+  // @ts-ignore
   return (
     <div className={'flex flex-col gap-10'}>
       <div className={'flex flex-col gap-4'}>
         <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'}>
           {startPoints.map((startPoint, index) => (
-            <Button color={'orange'} key={index} onClick={() => handleClickFrom(index)}>
+            <Button
+              color={'orange'}
+              key={index}
+              onClick={() => setFrom(index)}
+              disabled={navigationSelected && startPoint.name !== '현위치'}
+              selected={from === index}
+            >
               {startPoint.name.split(' ').map((word, i) => {
                 return (
                   <div key={i}>{word}</div>
@@ -128,12 +158,16 @@ const WayToCome = () => {
       <div className={'flex flex-col gap-4'}>
         <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-4'}>
           {applications.map((application, index) => (
-            <Button color={'green'} key={index} onClick={() => setBy(index)}>
+            <Button
+              color={'green'}
+              key={index}
+              onClick={() => handleSetBy(index)}
+              selected={by === index}
+            >
               {application.name}
             </Button>
           ))}
         </ButtonContainer>
-        <div className={'text-center text-green-300'}>현재 네이버맵만 개발완료</div>
         <InputGroup>
           <Input
             width={'sm'}
@@ -147,7 +181,12 @@ const WayToCome = () => {
       <div className={'flex flex-col gap-4'}>
         <ButtonContainer gridColClass={'grid-cols-2'}>
           {destinations.map((destination, index) => (
-            <Button color={'blue'} key={index} onClick={() => setTo(index)}>
+            <Button
+              color={'blue'}
+              key={index}
+              onClick={() => setTo(index)}
+              selected={to === index}
+            >
               {destination.label}
             </Button>
           ))}
@@ -182,6 +221,15 @@ const WayToCome = () => {
         <RoughMap/>
         <Transportations/>
       </div>
+      <Script
+        src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"
+        strategy={'lazyOnload'}
+        onLoad={() => {
+          // @ts-ignore
+          Kakao.init('d23a3f32a09035942646153c53e2e2f7');
+          setKakaoNaviInitialized(true);
+        }}
+      />
     </div>
   );
 };
