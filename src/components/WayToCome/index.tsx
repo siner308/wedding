@@ -75,11 +75,15 @@ const WayToCome = () => {
 
     setIntervalCleared(false);
     const timer = setTimeout(function () {
-      if (confirm('새 창에서 가는 길을 확인하시겠습니까?')) {
+
+      if (navigationSelected || confirm('새 창에서 가는 길을 확인하시겠습니까?')) {
         applications[by].openWebLink(destination, lat, lng, name);
       }
-    }, 2000);
-    setDeepLinkInterval(setInterval(() => isHideWeb(timer), 100));
+    }, 1000);
+
+    if (!navigationSelected) {
+      setDeepLinkInterval(setInterval(() => isHideWeb(timer), 100));
+    }
   };
 
   useEffect(() => {
@@ -111,7 +115,7 @@ const WayToCome = () => {
   const handleSetBy = (index: number) => {
     setBy(index);
     if (applications[index].type === 'navigation') {
-      if (!from || startPoints[from].name !== '현위치') {
+      if (from === undefined || startPoints[from].name !== '현위치') {
         setFrom(startPoints.findIndex((startPoint) => startPoint.name === '현위치'));
         alert('내비게이션은 현위치에서만 사용 가능합니다. 출발지가 현위치로 고정됩니다.');
       }

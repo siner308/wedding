@@ -108,7 +108,13 @@ export const applications: Application[] = [
         coordType: 'wgs84',
       });
     },
-    openWebLink: (destination, lat, lng, name) => {},
+    openWebLink: (destination, lat, lng, name) => {
+      if (navigator.userAgent.includes('Android')) {
+        location.href = 'https://play.google.com/store/apps/details?id=com.locnall.KimGiSa&pcampaignid=web_share';
+      } else {
+        location.href = 'https://apps.apple.com/kr/app/%EC%B9%B4%EC%B9%B4%EC%98%A4%EB%82%B4%EB%B9%84-%EC%A3%BC%EC%B0%A8-%EB%B0%9C%EB%A0%9B-%EC%A0%84%EA%B8%B0%EC%B0%A8%EC%B6%A9%EC%A0%84-%EC%84%B8%EC%B0%A8-%EB%B3%B4%ED%97%98-%EC%A4%91%EA%B3%A0%EC%B0%A8/id417698849';
+      }
+    },
   },
   {
     type: 'navigation',
@@ -118,6 +124,12 @@ export const applications: Application[] = [
     openDeepLink: (destination, lat, lng, name) => {
       location.href = `tmap://route?rGoName=${destination.name}&rGoX=${destination.lng}&rGoY=${destination.lat}`;
     },
-    openWebLink: (destination, lat, lng, name) => {},
+    openWebLink: (destination, lat, lng, name) => {
+      if (navigator.userAgent.includes('Android')) {
+        location.href = 'https://play.google.com/store/apps/details?id=com.skt.tmap.ku&pcampaignid=web_share'
+      } else {
+        location.href = 'https://apps.apple.com/kr/app/%ED%8B%B0%EB%A7%B5-%EB%8C%80%EC%A4%91%EA%B5%90%ED%86%B5-%EB%8C%80%EB%A6%AC%EC%9A%B4%EC%A0%84-%EC%A3%BC%EC%B0%A8-%EB%A0%8C%ED%84%B0%EC%B9%B4-%EA%B3%B5%ED%95%AD%EB%B2%84%EC%8A%A4/id431589174'
+      }
+    },
   },
 ];
