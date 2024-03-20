@@ -16,7 +16,6 @@ const ShareEvent = () => {
     if (navigator.share) {
       navigator.share({
         title: content.title,
-        text: content.description,
         url: `${location.protocol}//${location.host}`,
       });
     } else {

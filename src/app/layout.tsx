@@ -4,6 +4,7 @@ import "./globals.css";
 import React from 'react';
 import { GoogleAnalytics } from '@next/third-parties/google'
 import content from '@/app/content.json'
+import Head from 'next/head';
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
@@ -18,6 +19,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <Head>
+        <meta property={'og:title'} content={content.title}/>
+        <meta property={'og:description'} content={content.description}/>
+        <meta property={'og:image'} content={'/images/luvel_map_og.jpg'}/>
+      </Head>
       <body className={inter.className}>{children}</body>
       <GoogleAnalytics gaId={'G-6WVS0TEKW5'} />
     </html>
