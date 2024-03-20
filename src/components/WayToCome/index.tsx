@@ -137,7 +137,6 @@ const WayToCome = () => {
               color={'orange'}
               key={index}
               onClick={() => handleSetFrom(index)}
-              // disabled={navigationSelected && startPoint.name !== '현위치'}
               selected={from === index}
             >
               {startPoint.name.split(' ').map((word, i) => {
