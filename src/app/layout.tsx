@@ -6,7 +6,7 @@ import { GoogleAnalytics } from '@next/third-parties/google'
 
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata: Metadata = {
+export const metadata = {
   title: "안정현과 박지원의 결혼식",
   description: "2024년 7월 6일 오후 12시 30분 루벨에서 결혼합니다",
 };
