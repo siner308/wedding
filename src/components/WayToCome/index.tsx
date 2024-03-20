@@ -8,7 +8,6 @@ import RoughMap from '@/components/WayToCome/RoughMap';
 import Transportations from '@/components/WayToCome/Transportations';
 import { applications, destinations, startPoints } from '@/components/WayToCome/data';
 import Script from 'next/script';
-import { userAgent } from 'next/server';
 
 declare global {
   interface Document {
@@ -46,20 +45,26 @@ const WayToCome = () => {
       alert('출발지점과 어플을 선택해주세요.');
       return;
     }
-    let lat = '';
-    let lng = '';
+
     let name = startPoints[from].name;
-    if (name === '현위치') {
-      if (currentLocation) {
-        lat = currentLocation.coords.latitude.toString();
-        lng = currentLocation.coords.longitude.toString();
-      } else {
-        alert('현위치를 찾을 수 없습니다.');
-        return;
-      }
+    if (name === '현위치' && !currentLocation) {
+      alert('현위치를 찾을 수 없습니다.');
+      return;
+    }
+
+    let lat;
+    let lng;
+    if (currentLocation) {
+      lat = currentLocation.coords.latitude;
+      lng = currentLocation.coords.longitude;
     } else {
-      lat = startPoints[from].lat?.toString() || '';
-      lng = startPoints[from].lng?.toString() || '';
+      lat = startPoints[from].lat;
+      lng = startPoints[from].lng;
+    }
+
+    if (!lat || !lng) {
+      alert('출발지점의 위치를 찾을 수 없습니다.');
+      return;
     }
 
     const destination = destinations[to];
@@ -113,14 +118,11 @@ const WayToCome = () => {
 
   const handleSetBy = (index: number) => {
     setBy(index);
-    if (applications[index].type === 'navigation') {
-      if (from === undefined || startPoints[from].name !== '현위치') {
-        setFrom(startPoints.findIndex((startPoint) => startPoint.name === '현위치'));
-        alert('내비게이션은 현위치에서만 사용 가능합니다. 출발지가 현위치로 고정됩니다.');
-      }
-      if (!navigator.userAgent.includes('Android') && !navigator.userAgent.includes('iPhone')) {
-        alert('내비게이션은 모바일에서만 사용 가능합니다.');
-      }
+
+    const isNavigation = applications[index].type === 'navigation';
+    const isMobile = navigator.userAgent.includes('Android') || navigator.userAgent.includes('iPhone');
+    if (isNavigation && !isMobile) {
+      alert('내비게이션은 모바일에서만 사용 가능합니다.');
     }
   };
 
@@ -135,7 +137,7 @@ const WayToCome = () => {
               color={'orange'}
               key={index}
               onClick={() => handleSetFrom(index)}
-              disabled={navigationSelected && startPoint.name !== '현위치'}
+              // disabled={navigationSelected && startPoint.name !== '현위치'}
               selected={from === index}
             >
               {startPoint.name.split(' ').map((word, i) => {
@@ -225,7 +227,8 @@ const WayToCome = () => {
       </div>
       <Script
         src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"
-        strategy={'lazyOnload'}
+        integrity="sha384-l+xbElFSnPZ2rOaPrU//2FF5B4LB8FiX5q4fXYTlfcG4PGpMkE1vcL7kNXI6Cci0"
+        crossOrigin={'anonymous'}
         onLoad={() => {
           // @ts-ignore
           Kakao.init('d23a3f32a09035942646153c53e2e2f7');
