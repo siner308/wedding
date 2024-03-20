@@ -1,3 +1,5 @@
+'use client'
+
 import { useEffect, useState } from 'react';
 import Loading from '@/components/WayToCome/Loading';
 import Input from '@/components/WayToCome/Input';

@@ -1,5 +1,7 @@
+'use client'
+
 import { useEffect, useState } from 'react';
-import { metadata } from '@/app/layout';
+import content from '@/app/content.json';
 
 const ShareEvent = () => {
   const [clipboardCopied, setClipboardCopied] = useState(false);
@@ -13,8 +15,8 @@ const ShareEvent = () => {
   const handleClickShare = () => {
     if (navigator.share) {
       navigator.share({
-        title: metadata.title,
-        text: metadata.description,
+        title: content.title,
+        text: content.description,
         url: `${location.protocol}//${location.host}`,
       });
     } else {

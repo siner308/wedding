@@ -3,12 +3,12 @@ import { Inter } from "next/font/google";
 import "./globals.css";
 import React from 'react';
 import { GoogleAnalytics } from '@next/third-parties/google'
-
+import content from '@/app/content.json'
 const inter = Inter({ subsets: ["latin"] });
 
-export const metadata = {
-  title: "안정현과 박지원의 결혼식",
-  description: "2024년 7월 6일 오후 12시 30분 루벨에서 결혼합니다",
+export const metadata: Metadata = {
+  title: content.title,
+  description: content.description,
 };
 
 export default function RootLayout({
