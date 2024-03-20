@@ -13,7 +13,7 @@ const MainBanner = () => {
       className={'h-[800px] bg-cover bg-center bg-no-repeat relative flex justify-center pointer-events-none'}
     >
       <div className={'flex flex-col gap-4 self-end text-white text-4xl text-center py-20'}>
-        <DateTime value={date}/>
+        <DateTime date={date}/>
         <Location value={location}/>
       </div>
     </div>

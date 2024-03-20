@@ -1,14 +1,18 @@
 'use client'
 
+import NoSSR from '@/components/NoSSR';
+
 type Props = {
-  value: Date;
+  date: Date;
 }
 
 const DateTime = (props: Props) => {
-  const {value} = props;
+  const {date} = props;
   return (
     <div>
-      {value.toLocaleDateString()} {value.toLocaleTimeString().replace(/(\d{2}):(\d{2}):(\d{2})/, "$1:$2")}
+      <NoSSR>
+        {date.toLocaleDateString()} {date.toLocaleTimeString().replace(/(\d{2}):(\d{2}):(\d{2})/, "$1:$2")}
+      </NoSSR>
     </div>
   );
 };
