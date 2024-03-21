@@ -1,6 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
+import "./boat.scss";
 import React from 'react';
 import { GoogleAnalytics } from '@next/third-parties/google'
 import content from '@/app/content.json'
