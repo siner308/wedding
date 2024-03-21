@@ -9,7 +9,7 @@ const ShareEvent = () => {
   useEffect(() => {
     setTimeout(() => {
       setClipboardCopied(false);
-    }, 3000);
+    }, 700);
   }, [clipboardCopied]);
 
   const handleClickShare = () => {
@@ -28,8 +28,13 @@ const ShareEvent = () => {
     }
   };
   return (
-    <div className={'pb-10 '}>
-      <button className={'text-center bg-orange-300 text-2xl h-20 w-full rounded-lg'} onClick={handleClickShare}>{clipboardCopied ? '주소가 복사되었습니다!' : '공유하기'}</button>
+    <div className={'px-4'}>
+      <button
+        className={'text-center border bg-gray-100 text-lg h-14 w-full rounded-md'}
+        onClick={handleClickShare}
+      >
+        {clipboardCopied ? '주소가 복사되었습니다' : '공유하기'}
+      </button>
     </div>
   );
 };

@@ -19,7 +19,6 @@ const SourceCodeReference = () => {
 
   return (
     <div className={'flex justify-center gap-4'}>
-      <span className={'self-center'}>Source Code: </span>
       <NoSSR><GithubIcon clickCount={count} onClick={handleClick}/></NoSSR>
     </div>
   );

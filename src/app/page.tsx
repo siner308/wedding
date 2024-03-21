@@ -7,16 +7,18 @@ import InvitationMessage from '@/components/InvitationMessage';
 import PhotoGallery from '@/components/PhotoGallery';
 import ShareEvent from '@/components/Share';
 import SourceCodeReference from '../components/SourceCodeReference';
+import BankAccountGroup from '@/components/BankAccountGroup';
 
 export default function Home() {
   return (
-    <div className={'flex flex-col gap-20 mb-10'}>
+    <div className={'flex flex-col gap-16 mb-4'}>
       <div className={'flex flex-col gap-8 max-w-3xl mx-auto shadow-2xl'}>
         <MainBanner/>
         <InvitationMessage/>
         <Events/>
         <PhotoGallery/>
         <WayToCome/>
+        <BankAccountGroup />
       </div>
       <div className={'max-w-3xl w-full mx-auto'}>
         <ShareEvent/>

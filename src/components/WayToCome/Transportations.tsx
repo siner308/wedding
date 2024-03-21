@@ -5,11 +5,11 @@ const Transportations = () => {
     <div className={'bg-[#db9188] font-light text-white flex flex-col gap-2 p-4'}>
       <div className={'flex gap-2'}>
         <Image className={'h-fit'} src={'/icons/map-marker.png'} alt={'주소'} width={20} height={20} />
-        <p>서울시 강동구 천호대로 1077 이스트센트럴타워 35~36층</p>
+        <p>서울시 강동구 천호대로 1077 이스트센트럴타워 35층</p>
       </div>
       <div className={'flex gap-2'}>
         <Image className={'h-fit'} src={'/icons/phone.png'} alt={'전화번호'} width={20} height={20} />
-        <a className={'border-b-2'} href={'tel:02-6956-0230'}>02-6956-0230</a>
+        <a className={'border-b-2'} href={'tel:02-6956-0230'}>02-6956-0230 (통화하기)</a>
       </div>
       <div className={'flex gap-2'}>
         <Image className={'h-fit'} src={'/icons/bus.png'} alt={'버스노선'} width={20} height={20} />
