@@ -132,94 +132,96 @@ const WayToCome = () => {
 
   return (
     <div className={'flex flex-col gap-10'}>
-      <div className={'flex flex-col gap-4'}>
-        <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'}>
-          {startPoints.map((startPoint, index) => (
-            <Button
-              color={'orange'}
-              key={index}
-              onClick={() => handleSetFrom(index)}
-              selected={from === index}
+      <div id={'find-way-container'} className={"flex flex-col gap-10"}>
+        <div className={'flex flex-col gap-4'}>
+          <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'}>
+            {startPoints.map((startPoint, index) => (
+              <Button
+                color={'orange'}
+                key={index}
+                onClick={() => handleSetFrom(index)}
+                selected={from === index}
+              >
+                {startPoint.name.split(' ').map((word, i) => {
+                  return (
+                    <div key={i}>{word}</div>
+                  );
+                })}
+              </Button>
+            ))}
+          </ButtonContainer>
+          <InputGroup>
+            <Input
+              width={'lg'}
+              placeholder={'출발지점'}
+              value={from !== undefined ? startPoints[from].name : ''}
+              lineColor={'orange'}
+            />
+            <span className={'self-center'}>에서</span>
+          </InputGroup>
+          {currentLocationLoading && <Loading text={'현위치를 찾는 중...'}/>}
+        </div>
+        <div className={'flex flex-col gap-4'}>
+          <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-4'}>
+            {applications.map((application, index) => (
+              <Button
+                color={'green'}
+                key={index}
+                onClick={() => handleSetBy(index)}
+                selected={by === index}
+              >
+                {application.name}
+              </Button>
+            ))}
+          </ButtonContainer>
+          <InputGroup>
+            <Input
+              width={'sm'}
+              placeholder={'지도 앱'}
+              value={by !== undefined ? applications[by].name : ''}
+              lineColor={'green'}
+            />
+            <span className={'self-center'}>(으)로</span>
+          </InputGroup>
+        </div>
+        <div className={'flex flex-col gap-4'}>
+          <ButtonContainer gridColClass={'grid-cols-2'}>
+            {destinations.map((destination, index) => (
+              <Button
+                color={'blue'}
+                key={index}
+                onClick={() => setTo(index)}
+                selected={to === index}
+              >
+                {destination.label}
+              </Button>
+            ))}
+          </ButtonContainer>
+          <InputGroup>
+            <Input
+              width={'sm'}
+              placeholder={'목적지'}
+              value={to !== undefined ? destinations[to].label : ''}
+              lineColor={'blue'}
+            />
+            <span className={'self-center'}>까지</span>
+          </InputGroup>
+        </div>
+        <div className={'justify-center flex'}>
+          <div className={'flex flex-col'}>
+            <button
+              className={
+                `${findWayButtonDisabled
+                  ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
+                  : 'bg-[#FFFAA8]'
+                }
+               py-3 px-10 text-center text-lg rounded-xl`}
+              onClick={findWay}
+              disabled={findWayButtonDisabled}
             >
-              {startPoint.name.split(' ').map((word, i) => {
-                return (
-                  <div key={i}>{word}</div>
-                );
-              })}
-            </Button>
-          ))}
-        </ButtonContainer>
-        <InputGroup>
-          <Input
-            width={'lg'}
-            placeholder={'출발지점'}
-            value={from !== undefined ? startPoints[from].name : ''}
-            lineColor={'orange'}
-          />
-          <span className={'self-center'}>에서</span>
-        </InputGroup>
-        {currentLocationLoading && <Loading text={'현위치를 찾는 중...'}/>}
-      </div>
-      <div className={'flex flex-col gap-4'}>
-        <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-4'}>
-          {applications.map((application, index) => (
-            <Button
-              color={'green'}
-              key={index}
-              onClick={() => handleSetBy(index)}
-              selected={by === index}
-            >
-              {application.name}
-            </Button>
-          ))}
-        </ButtonContainer>
-        <InputGroup>
-          <Input
-            width={'sm'}
-            placeholder={'지도 앱'}
-            value={by !== undefined ? applications[by].name : ''}
-            lineColor={'green'}
-          />
-          <span className={'self-center'}>(으)로</span>
-        </InputGroup>
-      </div>
-      <div className={'flex flex-col gap-4'}>
-        <ButtonContainer gridColClass={'grid-cols-2'}>
-          {destinations.map((destination, index) => (
-            <Button
-              color={'blue'}
-              key={index}
-              onClick={() => setTo(index)}
-              selected={to === index}
-            >
-              {destination.label}
-            </Button>
-          ))}
-        </ButtonContainer>
-        <InputGroup>
-          <Input
-            width={'sm'}
-            placeholder={'목적지'}
-            value={to !== undefined ? destinations[to].label : ''}
-            lineColor={'blue'}
-          />
-          <span className={'self-center'}>까지</span>
-        </InputGroup>
-      </div>
-      <div className={'justify-center flex'}>
-        <div className={'flex flex-col'}>
-          <button
-            className={
-              `${findWayButtonDisabled
-                ? 'bg-gray-300 text-gray-500 cursor-not-allowed'
-                : 'bg-[#FFFAA8]'
-              }
-             py-3 px-10 text-center text-lg rounded-xl`}
-            onClick={findWay}
-            disabled={findWayButtonDisabled}
-          >
-            가는 길 찾기
-          </button>
+              가는 길 찾기
+            </button>
+          </div>
         </div>
       </div>
       <div>

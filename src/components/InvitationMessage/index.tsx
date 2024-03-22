@@ -2,13 +2,13 @@ import Family from '@/components/InvitationMessage/Family';
 
 const InvitationMessage = () => {
   const groom = {
-    name: '안정현',
+    name: '정현',
     father: '안재흥',
     mother: '정선순'
   }
 
   const bride = {
-    name: '박지원',
+    name: '지원',
     father: '박창규',
     mother: '이연화'
   }
