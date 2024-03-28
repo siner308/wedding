@@ -15,7 +15,7 @@ const BankAccountGroup = () => {
         <BankAccount
           holderName={'신부 박지원'}
           bankType={'카카오뱅크'}
-          bankNumber={'3333014913549'}
+          bankNumber={'3333-06-8895745'}
         />
       </div>
     </div>
