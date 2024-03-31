@@ -1,35 +1,1 @@
-'use client';
-
-import MainBanner from '@/components/MainBanner';
-import Events from '@/components/Introduce';
-import WayToCome from '@/components/WayToCome';
-import InvitationMessage from '@/components/InvitationMessage';
-import PhotoGallery from '@/components/PhotoGallery';
-import ShareEvent from '@/components/Share';
-import SourceCodeReference from '../components/SourceCodeReference';
-import BankAccountGroup from '@/components/BankAccountGroup';
-import Background from '@/components/Background/Boat';
-
-export default function Home() {
-  return (
-    <div>
-      <Background />
-      <div className={'flex flex-col gap-16 mb-4'}>
-        <div className={'flex flex-col gap-8 max-w-3xl mx-auto shadow-2xl'}>
-          <MainBanner/>
-          <InvitationMessage/>
-          <Events/>
-          <PhotoGallery/>
-          <WayToCome/>
-          <BankAccountGroup />
-        </div>
-        <div className={'max-w-3xl w-full mx-auto'}>
-          <ShareEvent/>
-        </div>
-        <div className={'max-w-3xl w-full mx-auto'}>
-          <SourceCodeReference />
-        </div>
-      </div>
-    </div>
-  );
-}
+'use client';import localFont from "next/font/local";import MainBanner from '@/components/MainBanner';import Events from '@/components/Introduce';import WayToCome from '@/components/WayToCome';import InvitationMessage from '@/components/InvitationMessage';import PhotoGallery from '@/components/PhotoGallery';import ShareEvent from '@/components/Share';import SourceCodeReference from '../components/SourceCodeReference';import BankAccountGroup from '@/components/BankAccountGroup';import Background from '@/components/Background/Boat';export default function Home() {  return (    <div>      <Background/>      <div className={'flex flex-col gap-16 mb-4'}>        <div className={'flex flex-col gap-8 max-w-3xl mx-auto shadow-2xl'}>          <MainBanner/>          <InvitationMessage/>          <Events/>          <PhotoGallery/>          <WayToCome/>          <BankAccountGroup/>        </div>        <div className={'max-w-3xl w-full mx-auto'}>          <ShareEvent/>        </div>        <div className={'max-w-3xl w-full mx-auto'}>          <SourceCodeReference/>        </div>      </div>    </div>  );}

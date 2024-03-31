@@ -37,3 +37,7 @@ next-env.d.ts
 
 # jetbrain
 .idea
+
+# fonts
+public/fonts/download/*
+!public/fonts/download/.gitkeep
