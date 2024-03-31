@@ -28,12 +28,23 @@ const Transportations = () => {
     <div className={'bg-[#db9188] font-light text-white flex flex-col gap-2 p-4'}>
       <div className={'flex gap-2'}>
         <Image className={'h-fit'} src={'/icons/map-marker.png'} alt={'주소'} width={20} height={20}/>
-        <p onClick={handleCopyAddress}
-           className={'cursor-pointer border-b-2'}>{addressCopied ? '복사되었습니다' : address}</p>
+        <p
+          id={'transportation-address'}
+          onClick={handleCopyAddress}
+          className={'cursor-pointer border-b-2'}
+        >
+          {addressCopied ? '복사되었습니다' : address}
+        </p>
       </div>
       <div className={'flex gap-2'}>
         <Image className={'h-fit'} src={'/icons/phone.png'} alt={'전화번호'} width={20} height={20}/>
-        <a className={'border-b-2'} href={'tel:02-6956-0230'}>02-6956-0230 (예식장)</a>
+        <a
+          id={'transportation-phone'}
+          className={'border-b-2'}
+          href={'tel:02-6956-0230'}
+        >
+          02-6956-0230 (예식장)
+        </a>
       </div>
       <div className={'flex gap-2'}>
         <Image className={'h-fit'} src={'/icons/bus.png'} alt={'버스노선'} width={20} height={20}/>
@@ -52,7 +63,11 @@ const Transportations = () => {
       <div className={'flex gap-2'}>
         <Image className={'h-fit'} src={'/icons/car.png'} alt={'자가용'} width={20} height={20}/>
         <p>
-          <span onClick={onClickParking} className={'cursor-pointer border-b-2'}>
+          <span
+            id={'transportation-parking-lot'}
+            onClick={onClickParking}
+            className={'cursor-pointer border-b-2'}
+          >
             이스트 센트럴 타워 주차장
           </span>
           으로 검색 후 오피스 방면으로 출입하면 됩니다.

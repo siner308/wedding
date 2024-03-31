@@ -137,6 +137,7 @@ const WayToCome = () => {
           <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'}>
             {startPoints.map((startPoint, index) => (
               <Button
+                id={startPoint.id}
                 color={'orange'}
                 key={index}
                 onClick={() => handleSetFrom(index)}
@@ -165,6 +166,7 @@ const WayToCome = () => {
           <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-4'}>
             {applications.map((application, index) => (
               <Button
+                id={application.id}
                 color={'green'}
                 key={index}
                 onClick={() => handleSetBy(index)}
@@ -188,6 +190,7 @@ const WayToCome = () => {
           <ButtonContainer gridColClass={'grid-cols-2'}>
             {destinations.map((destination, index) => (
               <Button
+                id={destination.id}
                 color={'blue'}
                 key={index}
                 onClick={() => setTo(index)}
@@ -210,6 +213,7 @@ const WayToCome = () => {
         <div className={'justify-center flex'}>
           <div className={'flex flex-col'}>
             <button
+              id={'find-way-button'}
               className={
                 `${findWayButtonDisabled
                   ? 'bg-gray-300 text-gray-500 cursor-not-allowed'

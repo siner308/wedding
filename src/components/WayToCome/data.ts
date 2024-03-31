@@ -1,10 +1,12 @@
 type StartPoint = {
+  id: string;
   name: string;
   lat?: number;
   lng?: number;
 }
 
 type Destination = {
+  id: string;
   name: string;
   label: string;
   lat: number;
@@ -13,10 +15,9 @@ type Destination = {
 }
 
 type Application = {
+  id: string;
   type: 'map' | 'navigation';
   name: string;
-  imgSrc: string;
-  alt: string;
   openDeepLink: (destination: Destination, lat: number, lng: number, name: string) => void;
   openWebLink: (destination: Destination, lat: number, lng: number, name: string) => void;
 }
@@ -40,24 +41,27 @@ declare global {
 }
 
 export const startPoints: StartPoint[] = [
-  { name: '현위치' },
-  { name: '잠실역', lat: 37.5132612, lng: 127.1001336 },
-  { name: '서울역 (KTX)', lat: 37.5547125, lng: 126.9707878 },
-  { name: '수서역 (SRT)', lat: 37.485544, lng: 127.10438 },
-  { name: '동대구역 (KTX/SRT)', lat: 35.879667, lng: 128.628476 },
-  { name: '서울고속터미널 (서울경부)', lat: 37.5049142, lng: 127.0049151 },
-  { name: '서울남부터미널', lat: 37.484918, lng: 127.01629 },
-  { name: '동서울터미널 (강변역)', lat: 37.5345963, lng: 127.0941813 },
+  {id: 'start-point-current', name: '현위치'},
+  {id: 'start-point-jamsil', name: '잠실역', lat: 37.5132612, lng: 127.1001336},
+  {id: 'start-point-station-seoul', name: '서울역 (KTX)', lat: 37.5547125, lng: 126.9707878},
+  {id: 'start-point-station-suseo', name: '수서역 (SRT)', lat: 37.485544, lng: 127.10438},
+  {id: 'start-point-station-dongdaegu', name: '동대구역 (KTX/SRT)', lat: 35.879667, lng: 128.628476},
+  {id: 'start-point-terminal-seoul-express', name: '서울고속터미널 (서울경부)', lat: 37.5049142, lng: 127.0049151},
+  {id: 'start-point-terminal-seoul-south', name: '서울남부터미널', lat: 37.484918, lng: 127.01629},
+  {id: 'start-point-terminal-seoul-east', name: '동서울터미널 (강변역)', lat: 37.5345963, lng: 127.0941813},
 ];
 
 export const destinations: Destination[] = [
   {
+    id: 'destination-wedding-hall',
     name: '루벨',
     label: '웨딩홀',
     lat: 37.5361769,
     lng: 127.1322858,
     parkingRequired: false,
-  }, {
+  },
+  {
+    id: 'destination-parking-lot',
     name: '이스트 센트럴 타워 주차장',
     label: '주차장',
     lat: 37.5369008,
@@ -68,10 +72,9 @@ export const destinations: Destination[] = [
 
 export const applications: Application[] = [
   {
+    id: 'application-navermap',
     type: 'map',
     name: '네이버 지도',
-    imgSrc: '/icons/navermap.png',
-    alt: 'navermap',
     openDeepLink: (destination, lat, lng, name) => {
       const method = destination.parkingRequired ? 'car' : 'public';
       location.href = `nmap://route/${method}?slat=${lat}&slng=${lng}&sname=${name}&dlat=${destination.lat}&dlng=${destination.lng}&dname=${destination.name}`;
@@ -83,10 +86,9 @@ export const applications: Application[] = [
     },
   },
   {
+    id: 'application-kakaomap',
     type: 'map',
     name: '카카오맵',
-    imgSrc: '/icons/kakaomap.png',
-    alt: 'kakaomap',
     openDeepLink: (destination, lat, lng, name) => {
       const method = destination.parkingRequired ? 'CAR' : 'PUBLICTRANSIT';
       location.href = `kakaomap://route?sp=${lat},${lng}&ep=${destination.lat},${destination.lng}&by=${method}`;
@@ -97,10 +99,9 @@ export const applications: Application[] = [
     },
   },
   {
+    id: 'application-kakaonavi',
     type: 'navigation',
     name: '카카오내비',
-    imgSrc: '/icons/kakaonavi.png',
-    alt: 'kakaonavi',
     openDeepLink: (destination, lat, lng, name) => {
       // @ts-ignore
       Kakao.Navi.start({
@@ -122,10 +123,9 @@ export const applications: Application[] = [
     },
   },
   {
+    id: 'application-tmap',
     type: 'navigation',
     name: 'T맵',
-    imgSrc: '/icons/tmap.png',
-    alt: 'tmap',
     openDeepLink: (destination, lat, lng, name) => {
       location.href = encodeURI(`tmap://route?startname=${name}&startx=${lng}&starty=${lat}&goalname=${destination.name}&goalx=${destination.lng}&goaly=${destination.lat}`);
     },
