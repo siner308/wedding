@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import "./globals.css";
 import "./boat.scss";
 import React from 'react';
-import { GoogleAnalytics } from '@next/third-parties/google'
+import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import content from '@/app/content.json'
 import Head from 'next/head';
 import localFont from "next/font/local";
@@ -31,6 +31,7 @@ export default function RootLayout({
       </Head>
       <body className={preloadFont.className}>{children}</body>
       <GoogleAnalytics gaId={'G-6WVS0TEKW5'} />
+      <GoogleTagManager gtmId={'GTM-MKSQ7M7T'} />
     </html>
   );
 }

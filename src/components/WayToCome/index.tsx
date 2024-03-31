@@ -10,7 +10,7 @@ import RoughMap from '@/components/WayToCome/RoughMap';
 import Transportations from '@/components/WayToCome/Transportations';
 import { applications, destinations, startPoints } from '@/components/WayToCome/data';
 import Script from 'next/script';
-import { sendGAEvent } from "@next/third-parties/google";
+import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
 
 declare global {
   interface Document {
@@ -87,6 +87,13 @@ const WayToCome = () => {
         distance: distance,
       },
     );
+    sendGTMEvent({
+      event: 'click-find-way',
+      valueStartPoint: startPoint.name,
+      valueApplication: application.name,
+      valueDestination: destination.name,
+      distance: distance,
+    });
 
     name.replace('현위치', '');
 
