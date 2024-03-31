@@ -10,6 +10,7 @@ import RoughMap from '@/components/WayToCome/RoughMap';
 import Transportations from '@/components/WayToCome/Transportations';
 import { applications, destinations, startPoints } from '@/components/WayToCome/data';
 import Script from 'next/script';
+import { sendGAEvent } from "@next/third-parties/google";
 
 declare global {
   interface Document {
@@ -48,7 +49,9 @@ const WayToCome = () => {
       return;
     }
 
-    let name = startPoints[from].name;
+    const startPoint = startPoints[from];
+
+    let name = startPoint.name;
     if (name === '현위치' && !currentLocation) {
       alert('현위치를 찾을 수 없습니다.');
       return;
@@ -60,8 +63,8 @@ const WayToCome = () => {
       lat = currentLocation.coords.latitude;
       lng = currentLocation.coords.longitude;
     } else {
-      lat = startPoints[from].lat;
-      lng = startPoints[from].lng;
+      lat = startPoint.lat;
+      lng = startPoint.lng;
     }
 
     if (!lat || !lng) {
@@ -70,27 +73,41 @@ const WayToCome = () => {
     }
 
     const destination = destinations[to];
+    const application = applications[by];
+
+    const distance = Math.ceil(Math.sqrt((lat - destination.lat) ** 2 + (lng - destination.lng) ** 2) * 100) / 100;
+
+    sendGAEvent(
+      'event',
+      'click-find-way',
+      {
+        valueStartPoint: startPoint.name,
+        valueApplication: application.name,
+        valueDestination: destination.name,
+        distance: distance,
+      },
+    );
 
     name.replace('현위치', '');
 
     // if not mobile, open web link
     if (!navigator.userAgent.includes('Android') && !navigator.userAgent.includes('iPhone')) {
-      applications[by].openWebLink(destination, lat, lng, name);
+      application.openWebLink(destination, lat, lng, name);
       return;
     }
 
     // if mobile, try deep link
-    if (applications[by].name === '카카오내비' && !kakaoNaviInitialized) {
+    if (application.name === '카카오내비' && !kakaoNaviInitialized) {
       alert('카카오내비 초기화 중입니다. 잠시 후 다시 시도해주세요.');
       return;
     }
-    applications[by].openDeepLink(destination, lat, lng, name);
+    application.openDeepLink(destination, lat, lng, name);
 
     setIntervalCleared(false);
     const timer = setTimeout(function () {
 
       if (navigationSelected || confirm('새 창에서 가는 길을 확인하시겠습니까?')) {
-        applications[by].openWebLink(destination, lat, lng, name);
+        application.openWebLink(destination, lat, lng, name);
       }
     }, 1500);
 
@@ -137,7 +154,6 @@ const WayToCome = () => {
           <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'}>
             {startPoints.map((startPoint, index) => (
               <Button
-                id={startPoint.id}
                 color={'orange'}
                 key={index}
                 onClick={() => handleSetFrom(index)}
@@ -166,7 +182,6 @@ const WayToCome = () => {
           <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-4'}>
             {applications.map((application, index) => (
               <Button
-                id={application.id}
                 color={'green'}
                 key={index}
                 onClick={() => handleSetBy(index)}
@@ -190,7 +205,6 @@ const WayToCome = () => {
           <ButtonContainer gridColClass={'grid-cols-2'}>
             {destinations.map((destination, index) => (
               <Button
-                id={destination.id}
                 color={'blue'}
                 key={index}
                 onClick={() => setTo(index)}

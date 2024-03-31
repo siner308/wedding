@@ -1,7 +1,6 @@
 import React from 'react';
 
 type Props = {
-  id: string;
   children: React.ReactNode;
   onClick: () => void;
   color: 'orange' | 'green' | 'blue';
@@ -10,7 +9,7 @@ type Props = {
 }
 
 const Button = (props: Props) => {
-  const { id, children, color, onClick, disabled, selected } = props;
+  const { children, color, onClick, disabled, selected } = props;
 
   let colorClass;
   if (disabled) {
@@ -23,7 +22,6 @@ const Button = (props: Props) => {
 
   return (
     <button
-      id={id}
       className={`p-1 h-14 ${colorClass} rounded-lg break-words min-w-20`}
       onClick={onClick}
       disabled={disabled}
