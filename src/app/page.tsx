@@ -8,7 +8,7 @@ import PhotoGallery from '@/components/PhotoGallery';
 import ShareEvent from '@/components/Share';
 import SourceCodeReference from '../components/SourceCodeReference';
 import BankAccountGroup from '@/components/BankAccountGroup';
-import Background from '@/components/Background/Boat';
+import Background from '@/components/Background';
 
 export default function Home() {
   return (

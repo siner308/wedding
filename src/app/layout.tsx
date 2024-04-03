@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import "./boat.scss";
 import React from 'react';
 import { GoogleAnalytics, GoogleTagManager } from '@next/third-parties/google'
 import content from '@/app/content.json'
