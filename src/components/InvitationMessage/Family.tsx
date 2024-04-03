@@ -2,18 +2,18 @@ type Props = {
   mother: string;
   father: string;
   me: string;
-  gender: 'male' | 'female';
+  position: string;
 }
 
 const Family = (props: Props) => {
-  const { me, father, mother, gender } = props;
+  const { me, father, mother, position } = props;
   return (
     <div className={'mx-auto flex items-center gap-4'}>
       <div>
         <div>{father}</div>
         <div>{mother}</div>
       </div>
-      <div>의 {gender === 'male' ? '아들' : '딸'}</div>
+      <div>의 {position}</div>
       <div
         style={{
           display: 'inline',

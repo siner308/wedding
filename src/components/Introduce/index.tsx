@@ -1,7 +1,6 @@
 const Events = () => {
   return (
     <>
-      <hr />
       <div className={'flex justify-between gap-2 place-self-center'}>
         <div className={'w-full flex gap-2'}>
           <div className={'mt-[-10px]'}>

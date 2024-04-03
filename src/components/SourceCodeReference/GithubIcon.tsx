@@ -5,16 +5,25 @@ import Image from 'next/image';
 const GithubIcon = (props: { clickCount: number, onClick: () => void }) => {
   const { clickCount, onClick } = props;
 
-  const getRandomPosition = () => {
+  const getRandomPosition = (size: number) => {
     const width = window.innerWidth;
     const height = window.innerHeight;
-    const x = Math.floor(Math.random() * width);
-    const y = Math.floor(Math.random() * height);
+    let x = Math.floor(Math.random() * width);
+    let y = Math.floor(Math.random() * height);
+
+    if (x + size > width) {
+      x -= size;
+    }
+
+    if (y + size > height) {
+      y -= size;
+    }
+
     return { x, y };
   };
 
-  const { x, y } = getRandomPosition();
   const size = 40 * (clickCount + 1);
+  const { x, y } = getRandomPosition(size);
 
   return (
     <button

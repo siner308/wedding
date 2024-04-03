@@ -6,15 +6,14 @@ import NoSSR from '@/components/NoSSR';
 const SourceCodeReference = () => {
   const [count, setCount] = useState<number>(0);
 
-  useEffect(() => {
-    if (count >= 5) {
+  const handleClick = () => {
+    const nextCount = count + 1;
+    if (nextCount >= 5) {
       location.href = content.githubUrl;
       setCount(0);
+    } else {
+      setCount(count + 1);
     }
-  }, [count, setCount]);
-
-  const handleClick = () => {
-    setCount(count + 1);
   };
 
   return (

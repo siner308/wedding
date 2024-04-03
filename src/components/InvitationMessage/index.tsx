@@ -16,7 +16,7 @@ const InvitationMessage = () => {
 
   return (
     <div className={'flex flex-col gap-10 text-lg'}>
-      <div className={'text-center'}>
+      <div className={'text-left mx-auto'}>
         {content.invitationMessage
           .split('\n')
           .map((line, index) => (
@@ -24,9 +24,9 @@ const InvitationMessage = () => {
           ))
         }
       </div>
-      <div className={'flex flex-col gap-4'}>
-        <Family father={groom.father} mother={groom.mother} gender={'male'} me={groom.name}/>
-        <Family father={bride.father} mother={bride.mother} gender={'female'} me={bride.name}/>
+      <div className={'flex flex-col gap-4 mx-auto border-t border-b p-10'}>
+        <Family father={groom.father} mother={groom.mother} position={'장남'} me={groom.name}/>
+        <Family father={bride.father} mother={bride.mother} position={'장녀'} me={bride.name}/>
       </div>
     </div>
   );
