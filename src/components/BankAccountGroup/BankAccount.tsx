@@ -13,7 +13,6 @@ const BankAccount = (props: Props) => {
     bankNumber,
   } = props;
 
-  const [open, setOpen] = useState(false);
   const [copied, setCopied] = useState(false);
 
   useEffect(() => {
@@ -34,25 +33,22 @@ const BankAccount = (props: Props) => {
 
   return (
     <div className={'w-full'}>
-      <div className={'h-14 border flex items-center justify-between cursor-pointer'} onClick={() => setOpen(!open)}>
-        <div className={'pl-4 align-middle'}>{holderName}</div>
-        <div className={'border-l w-20 text-center'}>{open ? '닫기' : '열기'}</div>
-      </div>
-      {open && (
-        <div onClick={handleCopy} className={'h-20 border flex items-center justify-between bg-amber-100 cursor-pointer'}>
-          <div className={'pl-4 flex flex-col justify-center'}>
-            {copied
-              ? <span>복사되었습니다</span>
-              : (
-                <>
-                  <div>{bankType}</div>
-                  <div>{bankNumber}</div>
-                </>
-              )}
-          </div>
-          <div className={'border-l w-20 text-center'}>복사</div>
+      <div onClick={handleCopy} className={'h-20 flex items-center justify-between bg-amber-100 cursor-pointer'}>
+        <div className={'pl-4 justify-center'}>
+          {copied
+            ? <span>복사되었습니다</span>
+            : (
+              <div>
+                <div className={'align-middle'}>{holderName}</div>
+                <div className={'flex gap-2'}>
+                  <span>{bankType}</span>
+                  <span>{bankNumber}</span>
+                </div>
+              </div>
+            )}
         </div>
-      )}
+        <div className={'border-l w-20 text-center'}>복사</div>
+      </div>
     </div>
   );
 };
