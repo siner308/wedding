@@ -22,7 +22,7 @@ const GithubIcon = (props: { clickCount: number, onClick: () => void }) => {
     return { x, y };
   };
 
-  const size = 40 * (clickCount + 1);
+  const size = 40;
   const { x, y } = getRandomPosition(size);
 
   return (

@@ -29,7 +29,7 @@ export default function Home() {
           <ShareEvent/>
         </div>
         <div className={'max-w-3xl w-full mx-auto flex flex-col gap-4'}>
-          <SourceCodeReference/>
+          {/*<SourceCodeReference/>*/}
           <NoSSR><BackgroundMusic/></NoSSR>
         </div>
       </div>
