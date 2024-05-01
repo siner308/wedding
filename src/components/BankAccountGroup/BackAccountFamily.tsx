@@ -5,8 +5,8 @@ const bankAccountFamily = {
   'bride': [
     {
       holderName: '박창규 (父)',
-      bankType: '농협은행',
-      bankNumber: '713-12-076881',
+      bankType: '대구은행',
+      bankNumber: '231-08-010200-5',
     },
     {
       holderName: '이연화 (母)',
