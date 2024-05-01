@@ -25,7 +25,7 @@ const BankAccount = (props: Props) => {
 
   const handleCopy = () => {
     navigator.clipboard
-      .writeText(`${bankType} ${bankNumber}`)
+      .writeText(`${bankNumber} ${bankType}`)
       .then(() => {
         setCopied(true);
       });
