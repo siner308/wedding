@@ -2,8 +2,8 @@
 
 const PhotoGallery = () => {
   const images = [
-    '/images/couple-1.jpeg',
-    '/images/couple-2.jpeg',
+    '/images/gallery-left.jpg',
+    '/images/gallery-right.jpg',
   ];
 
   return (

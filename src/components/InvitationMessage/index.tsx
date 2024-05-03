@@ -15,7 +15,7 @@ const InvitationMessage = () => {
   };
 
   return (
-    <div className={'flex flex-col gap-10 text-lg'}>
+    <div className={'flex flex-col gap-20 text-lg'}>
       <div className={'text-left mx-auto'}>
         {content.invitationMessage
           .split('\n')
@@ -24,7 +24,7 @@ const InvitationMessage = () => {
           ))
         }
       </div>
-      <div className={'flex flex-col gap-4 mx-auto border-t border-b p-10'}>
+      <div className={'flex flex-col gap-4 mx-auto border-t border-b px-10 py-20'}>
         <Family father={groom.father} mother={groom.mother} position={'장남'} me={groom.name}/>
         <Family father={bride.father} mother={bride.mother} position={'장녀'} me={bride.name}/>
       </div>

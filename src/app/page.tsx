@@ -16,8 +16,8 @@ export default function Home() {
   return (
     <div>
       <NoSSR><Background/></NoSSR>
-      <div className={'flex flex-col gap-16 mb-20'}>
-        <div className={'flex flex-col gap-8 max-w-3xl mx-auto shadow-2xl'}>
+      <div className={'flex flex-col gap-20 pb-20 bg-gray-50'}>
+        <div className={'bg-white flex flex-col gap-20 max-w-3xl mx-auto shadow-xl pb-10 rounded-2xl'}>
           <MainBanner/>
           <InvitationMessage/>
           <Events/>
@@ -29,7 +29,7 @@ export default function Home() {
           <ShareEvent/>
         </div>
         <div className={'max-w-3xl w-full mx-auto flex flex-col gap-4'}>
-          {/*<SourceCodeReference/>*/}
+          <SourceCodeReference/>
           <NoSSR><BackgroundMusic/></NoSSR>
         </div>
       </div>

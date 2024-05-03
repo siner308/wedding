@@ -45,7 +45,7 @@ const WayToCome = () => {
 
   const findWay = () => {
     if (from === undefined || by === undefined || to === undefined) {
-      alert('출발지점과 어플을 선택해주세요.');
+      alert('출발지, 목적지, 앱을 선택해주세요.');
       return;
     }
 
@@ -155,7 +155,7 @@ const WayToCome = () => {
   const navigationSelected = by !== undefined && applications[by].type === 'navigation';
 
   return (
-    <div className={'flex flex-col gap-10'}>
+    <div className={'flex flex-col gap-20'}>
       <div id={'find-way-container'} className={"flex flex-col gap-10"}>
         <div className={'flex flex-col gap-4'}>
           <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'}>
@@ -186,29 +186,6 @@ const WayToCome = () => {
           {currentLocationLoading && <Loading text={'현위치를 찾는 중...'}/>}
         </div>
         <div className={'flex flex-col gap-4'}>
-          <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-4'}>
-            {applications.map((application, index) => (
-              <Button
-                color={'green'}
-                key={index}
-                onClick={() => handleSetBy(index)}
-                selected={by === index}
-              >
-                {application.name}
-              </Button>
-            ))}
-          </ButtonContainer>
-          <InputGroup>
-            <Input
-              width={'sm'}
-              placeholder={'지도 앱'}
-              value={by !== undefined ? applications[by].name : ''}
-              lineColor={'green'}
-            />
-            <span className={'self-center'}>(으)로</span>
-          </InputGroup>
-        </div>
-        <div className={'flex flex-col gap-4'}>
           <ButtonContainer gridColClass={'grid-cols-2'}>
             {destinations.map((destination, index) => (
               <Button
@@ -231,6 +208,29 @@ const WayToCome = () => {
             <span className={'self-center'}>까지</span>
           </InputGroup>
         </div>
+        <div className={'flex flex-col gap-4'}>
+          <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-4'}>
+            {applications.map((application, index) => (
+              <Button
+                color={'green'}
+                key={index}
+                onClick={() => handleSetBy(index)}
+                selected={by === index}
+              >
+                {application.name}
+              </Button>
+            ))}
+          </ButtonContainer>
+          <InputGroup>
+            <Input
+              width={'sm'}
+              placeholder={'지도 앱'}
+              value={by !== undefined ? applications[by].name : ''}
+              lineColor={'green'}
+            />
+            <span className={'self-center'}>(으)로</span>
+          </InputGroup>
+        </div>
         <div className={'justify-center flex'}>
           <div className={'flex flex-col'}>
             <button
@@ -242,7 +242,6 @@ const WayToCome = () => {
                 }
                py-3 px-10 text-center text-lg rounded-xl`}
               onClick={findWay}
-              disabled={findWayButtonDisabled}
             >
               가는 길 찾기
             </button>

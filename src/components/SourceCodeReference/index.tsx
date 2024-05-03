@@ -8,7 +8,7 @@ const SourceCodeReference = () => {
 
   const handleClick = () => {
     const nextCount = count + 1;
-    if (nextCount >= 5) {
+    if (nextCount >= 10) {
       location.href = content.githubUrl;
       setCount(0);
     } else {

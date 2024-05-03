@@ -14,7 +14,7 @@ export const BackgroundMusic = () => {
           controlsList={'nodownload noplaybackrate'}
         />
       </div>
-      <div className={'text-center'}>
+      <div className={'text-center text-gray-300'}>
         음원: 노을의 저편에서 - 브금대통령
       </div>
     </>
