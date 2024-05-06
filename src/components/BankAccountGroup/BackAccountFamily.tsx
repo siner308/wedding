@@ -44,7 +44,7 @@ type Props = {
 
 const BankAccountFamily = (props: Props) => {
   const { type } = props;
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
 
   if (!bankAccountFamily[type]) return null;
 
