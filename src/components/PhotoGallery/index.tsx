@@ -8,7 +8,7 @@ const PhotoGallery = () => {
     { path: '/images/gallery/1.jpg', width: 'short' },
     { path: '/images/gallery/5.jpg', width: 'short' },
     { path: '/images/gallery/2.jpg', width: 'short' },
-    { path: '/images/gallery/4.jpg', width: 'short' },
+    // { path: '/images/gallery/4.jpg', width: 'short' },
     { path: '/images/gallery/6.jpg', width: 'short' },
     { path: '/images/gallery/3.jpg', width: 'wide' },
   ];
