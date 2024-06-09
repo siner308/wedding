@@ -1,4 +1,4 @@
-'use client'
+'use client';
 
 import { useEffect, useState } from 'react';
 import Loading from '@/components/WayToCome/Loading';
@@ -10,7 +10,8 @@ import RoughMap from '@/components/WayToCome/RoughMap';
 import Transportations from '@/components/WayToCome/Transportations';
 import { applications, destinations, startPoints } from '@/components/WayToCome/data';
 import Script from 'next/script';
-import { sendGAEvent, sendGTMEvent } from "@next/third-parties/google";
+import { sendGAEvent, sendGTMEvent } from '@next/third-parties/google';
+import ParkingCautionModal from '@/components/WayToCome/ParkingCaution';
 
 declare global {
   interface Document {
@@ -29,6 +30,8 @@ const WayToCome = () => {
   const [deepLinkInterval, setDeepLinkInterval] = useState<NodeJS.Timeout>();
 
   const [kakaoNaviInitialized, setKakaoNaviInitialized] = useState<boolean>(false);
+
+  const [openParkingCautionModal, setOpenParkingCautionModal] = useState<boolean>(false);
 
   useEffect(() => {
     if (intervalCleared) {
@@ -154,9 +157,16 @@ const WayToCome = () => {
 
   const navigationSelected = by !== undefined && applications[by].type === 'navigation';
 
+  const onChangeDestination = (index: number) => {
+    if (destinations[index].parkingRequired) {
+      setOpenParkingCautionModal(true);
+    }
+    setTo(index);
+  };
+
   return (
     <div className={'flex flex-col gap-20'}>
-      <div id={'find-way-container'} className={"flex flex-col gap-10"}>
+      <div id={'find-way-container'} className={'flex flex-col gap-10'}>
         <div className={'flex flex-col gap-4'}>
           <ButtonContainer gridColClass={'grid-cols-2 sm:grid-cols-3 lg:grid-cols-4'}>
             {startPoints.map((startPoint, index) => (
@@ -191,7 +201,7 @@ const WayToCome = () => {
               <Button
                 color={'blue'}
                 key={index}
-                onClick={() => setTo(index)}
+                onClick={() => onChangeDestination(index)}
                 selected={to === index}
               >
                 {destination.label}
@@ -252,6 +262,10 @@ const WayToCome = () => {
         <RoughMap/>
         <Transportations/>
       </div>
+      <ParkingCautionModal
+        open={openParkingCautionModal}
+        onClose={() => setOpenParkingCautionModal(false)}
+      />
       <Script
         src="https://t1.kakaocdn.net/kakao_js_sdk/2.7.0/kakao.min.js"
         integrity="sha384-l+xbElFSnPZ2rOaPrU//2FF5B4LB8FiX5q4fXYTlfcG4PGpMkE1vcL7kNXI6Cci0"
