@@ -7,7 +7,6 @@ import InvitationMessage from '@/components/InvitationMessage';
 import PhotoGallery from '@/components/PhotoGallery';
 import ShareEvent from '@/components/Share';
 import SourceCodeReference from '../components/SourceCodeReference';
-import BankAccountGroup from '@/components/BankAccountGroup';
 import Background from '@/components/Background';
 import BackgroundMusic from '@/components/BackgroundMusic';
 import NoSSR from '@/components/NoSSR';
@@ -23,7 +22,6 @@ export default function Home() {
           <Events/>
           <PhotoGallery/>
           <WayToCome/>
-          <BankAccountGroup/>
         </div>
         <div className={'max-w-3xl w-full mx-auto'}>
           <ShareEvent/>
